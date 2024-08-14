@@ -379,3 +379,115 @@ const thema = unique<string>("wallop")
 
 console.log(them)
 console.log(thema)
+
+
+function filterArray <T>(array: T[], condition: (item: T) => boolean): T[] {
+  return array.filter((item) => condition(item))
+}
+
+const numberArray = [1,2,3,4,5,6,7,8,9,10 ,11,12,13,14,15]
+const evenNumbers = filterArray<number>(numberArray, (num) => num % 2 == 0);
+console.log(evenNumbers);
+
+const fruits = ["apple", "banana","cherry","pear","date", "pineapple","berry" ]
+const shortFruits = filterArray<string>(fruits, (words) => words.length <= 5 )
+console.log(shortFruits)
+
+
+interface Fruits {
+  name: string;
+  color: string
+}
+
+
+const fruitsArray: Fruits[] = [
+  {name: "Apple", color: "Green" },
+  {name: "Orange", color: "Green" },
+  {name: "Cherry", color: "Red" },
+  {name: "Berry", color: "blue" },
+]
+
+
+const GreenFruits = filterArray<Fruits>(fruitsArray, (fruits) => fruits.color === "Green")
+console.log(GreenFruits)
+
+
+//Type Narrowing
+
+//(Typeof)
+
+type MyType = string | number;
+
+function exampleFunction(value: MyType): void {
+  if (typeof value === "string") {
+    console.log(value.toUpperCase())
+  } else {
+    console.log(value.toFixed(2))
+  }
+}
+
+
+
+exampleFunction("Wonderful")
+exampleFunction(100 )
+
+
+//(instanceof)
+
+class Dog {
+  bark() : void {
+    console.log('woff woff')
+  }
+}
+
+class Cat {
+  meow() : void {
+    console.log('moew')
+  }
+}
+
+function animalSound(animal: Dog | Cat): void{
+  if (animal instanceof Dog) {
+    animal.bark()
+  } else {
+    animal.meow()
+  }
+} 
+
+
+const myDog = new Dog()
+const myCat = new Cat()
+
+animalSound(myDog)
+animalSound(myCat)
+
+
+//(InterSection)
+
+type Manager = {
+  id: number,
+  status: string
+}
+
+
+type Employer = {
+  role: string,
+  workHours: number
+}
+
+
+type HoWorker = Manager & Employer
+
+
+const NewWorker1: HoWorker = {
+ id: 6055,
+ status: "single",
+ role: "manager",
+ workHours: 16,
+
+}
+
+
+const work = NewWorker1
+
+console.log(work)
